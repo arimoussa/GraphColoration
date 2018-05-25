@@ -4,15 +4,20 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
-public class Graph {
+public class Graphe {
 
 	
 	private int v; // number of vertices
 	private int e; // number of edges
 	//private ArrayList<Integer>[] adjacent;
-	private LinkedList<Integer>[] adjacent ;
+	private List<Sommet>[] adjacent ;
 	
+	private List<Sommet> listeSommmet;
+	private List<Arete> listeArete;
+	
+	 
 	
 	/**
      * Initializes an empty graph with {@code V} vertices and 0 edges.
@@ -21,7 +26,7 @@ public class Graph {
      * @param  V number of vertices
      * @throws IllegalArgumentException if {@code V < 0}
      */
-	public Graph( int vertices )
+	public Graphe( int vertices )
 	{
 		if( vertices <0 ) throw new IllegalArgumentException("Number of vertices must be nonnegative ");
 		//this.adjacent = ( Bag<Integer>[] )new Bag[this.v];
@@ -32,12 +37,12 @@ public class Graph {
 		this.adjacent = new LinkedList[this.v];
 		for(int i=0; i< vertices; i++ )
 		{
-			this.adjacent[i] = new LinkedList<Integer>() ;
+			//this.adjacent[i] = new LinkedList<Integer>() ;
 		}
 	}
 	
 	
-	public Graph( BufferedReader buff) 
+	public Graphe( BufferedReader buff) 
 	{
 		
 		String line = null ;
@@ -48,7 +53,7 @@ public class Graph {
 					if( line.contains("NbSommets")   )
 					{
 						int indiceDdebut = line.indexOf(":");
-						this.v 
+						//this.v 
 						
 						
 					}
@@ -62,7 +67,7 @@ public class Graph {
 			this.adjacent = new LinkedList[this.v];
 			for(int i=0 ; i < this.v ; i++ )
 			{
-				this.adjacent[i] = new LinkedList<Integer>() ;
+				//this.adjacent[i] = new LinkedList<Integer>() ;
 			}
 			
 	
@@ -71,6 +76,12 @@ public class Graph {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+	}
+	
+	public void calculDegree() {
+		
 		
 		
 	}
