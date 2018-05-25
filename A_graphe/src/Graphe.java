@@ -53,8 +53,7 @@ public class Graphe {
 					if( line.contains("NbSommets")   )
 					{
 						int indiceDdebut = line.indexOf(":");
-						//this.v 
-						
+
 						
 					}
 					
