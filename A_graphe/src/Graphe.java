@@ -48,7 +48,7 @@ public class Graph {
 					if( line.contains("NbSommets")   )
 					{
 						int indiceDdebut = line.indexOf(":");
-						this.v 
+						this.v = 1 ;
 						
 						
 					}
