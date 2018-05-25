@@ -14,7 +14,7 @@ public class Graphe {
 	//private ArrayList<Integer>[] adjacent;
 	private List<Sommet>[] adjacent ;
 	
-	private List<Sommet> listeSommmet;
+	private List<Sommet> listeSommet;
 	private List<Arete> listeArete;
 	
 	 
@@ -81,7 +81,11 @@ public class Graphe {
 	
 	public void calculDegree() {
 		
-		
+		for(int i=0; i<this.adjacent.length ; i++) {
+			
+			this.listeSommet.get(i).setDegree(this.adjacent[i].size());
+			
+		}
 		
 	}
 	
