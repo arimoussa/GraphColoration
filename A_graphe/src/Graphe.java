@@ -1,0 +1,78 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import java.util.Collection;
+import java.util.LinkedList;
+
+public class Graph {
+
+	
+	private int v; // number of vertices
+	private int e; // number of edges
+	//private ArrayList<Integer>[] adjacent;
+	private LinkedList<Integer>[] adjacent ;
+	
+	
+	/**
+     * Initializes an empty graph with {@code V} vertices and 0 edges.
+     * param V the number of vertices
+     *
+     * @param  V number of vertices
+     * @throws IllegalArgumentException if {@code V < 0}
+     */
+	public Graph( int vertices )
+	{
+		if( vertices <0 ) throw new IllegalArgumentException("Number of vertices must be nonnegative ");
+		//this.adjacent = ( Bag<Integer>[] )new Bag[this.v];
+		
+		
+		this.v = vertices ;
+		this.e = 0;
+		this.adjacent = new LinkedList[this.v];
+		for(int i=0; i< vertices; i++ )
+		{
+			this.adjacent[i] = new LinkedList<Integer>() ;
+		}
+	}
+	
+	
+	public Graph( BufferedReader buff) 
+	{
+		
+		String line = null ;
+		try {
+				while ( ( line = buff.readLine() ) != null )
+				{
+					
+					if( line.contains("NbSommets")   )
+					{
+						int indiceDdebut = line.indexOf(":");
+						this.v 
+						
+						
+					}
+					
+					
+				}
+			
+			
+			this.v = buff.read() ;
+			if( this.v < 0  ) throw new IllegalArgumentException("number of vertices in a Grap must be nonnegative") ;
+			this.adjacent = new LinkedList[this.v];
+			for(int i=0 ; i < this.v ; i++ )
+			{
+				this.adjacent[i] = new LinkedList<Integer>() ;
+			}
+			
+	
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+}
