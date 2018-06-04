@@ -156,7 +156,9 @@ public class Graphe {
 			e.printStackTrace();
 		}
 		
-		this.calculDegree();
+		if ( readingEdge ) this.calculDegree();
+		else System.out.println("Le format du fichier choisi est incorrect");
+		
 	}
 	
 	public void calculDegree() {

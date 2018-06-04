@@ -13,18 +13,39 @@ public class WelshPowell {
 	private int chromaticNumber;
 
 
-	public WelshPowell( Graphe g )
+	public WelshPowell( Graphe g , int ordreTri )
 	{
+		if( g.getV() == 0 ) System.exit(0);
+		
 		sortedVertices = new ArrayList<Sommet>(g.getListeSommet() );
-		Collections.sort(sortedVertices , Collections.reverseOrder() );
+		String ordre="";
+		if( ordreTri > 2 && ordreTri <0 ) 
+			{
+				System.out.println("L'entier ordreTri doit etre compris entre 0 et 2:");
+				System.out.println("0:Tri par ordre decroissant des degres des sommetes");
+				System.out.println("1:Tri par ordre croissant des degres des sommetes");
+				System.out.println("2:Tri aleatoires des degres des sommetes");
+				System.exit(0);
+			}
+		// Tri de la liste de sommets
+		if( ordreTri== 0 ) {
+			Collections.sort(sortedVertices , Collections.reverseOrder() ); ordre = " decroissant" ;
+		}
+		else if(ordreTri == 1 ) {
+			Collections.sort(sortedVertices , null ); ordre =" croissant ";
+		}
+		else	{
+			Collections.shuffle(sortedVertices) ; ordre = " aleatoire " ;
+		}
+		
 		int k = 1;
 		int [] color  = new int[ g.getV()];
 		initializeColor( color ) ;
 		
-		System.out.println( "Sommet "+ sortedVertices.get(0) +"Max deg : " + sortedVertices.get(0).getDegree() );
+		/*System.out.println( "Sommet "+ sortedVertices.get(0) +"Max deg : " + sortedVertices.get(0).getDegree() );
 		System.out.println( "Sommet "+ sortedVertices.get( sortedVertices.size()  - 1 ) +"Min deg : " + sortedVertices.get( sortedVertices.size()  - 1 ).getDegree() );
 		System.out.println(" Sorted size : " + sortedVertices.size() );
-		System.out.println(" Color size : " + color.length ) ;
+		System.out.println(" Color size : " + color.length ) ;*/
 		
 		Sommet y = null;
 		while ( sortedVertices.size() > 0 )
@@ -62,10 +83,10 @@ public class WelshPowell {
 			k++;
 		}
 		
-		System.out.println("\n\t Nombre Chromatique de g : " + k );
+		System.out.println("\nNombre Chromatique de g : " + k +" avec un tri des sommets par ordre "+ordre+" des degres \n");
 	}
 	
-	
+
 	public void initializeColor( int []color)
 	{
 		for(int i=0; i<color.length ; i++ )

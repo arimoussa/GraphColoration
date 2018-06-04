@@ -48,10 +48,11 @@ public class Test {
 		if( buffReader != null  ) 
 		{
 			Graphe g = new Graphe( buffReader ) ;
-			//System.out.println( "\n\nAffichage du graphe \n" + g.toString() );
-			WelshPowell w = new WelshPowell( g ) ;
-			WelshP a = new WelshP(g);
-			//a.execute();
+			System.out.println( "\n\nAffichage du graphe \n" + g.toString() );
+			WelshPowell w = new WelshPowell( g , 0) ;
+			WelshPowell w1 = new WelshPowell( g , 1) ;
+			WelshPowell w2 = new WelshPowell( g , 2) ;
+			
 		}
 		else System.out.println("BuffReader invalide ");
 		
