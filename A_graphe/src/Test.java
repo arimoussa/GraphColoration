@@ -11,13 +11,13 @@ public class Test {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		
+		/*
 		String s = "1 2 3 46 78 98 98 5";
 		
 		String[] data = s.split(" ");
 		
 		System.out.println( "Test split :"+Arrays.toString( data ));
-		
+		*/
 		
 		FileReader in = null ;
 		BufferedReader buffReader = null;
@@ -48,10 +48,15 @@ public class Test {
 		if( buffReader != null  ) 
 		{
 			Graphe g = new Graphe( buffReader ) ;
-			System.out.println( "\n\nAffichage du graphe \n" + g.toString() );
-			
+			//System.out.println( "\n\nAffichage du graphe \n" + g.toString() );
+			WelshPowell w = new WelshPowell( g ) ;
+			WelshP a = new WelshP(g);
+			//a.execute();
 		}
 		else System.out.println("BuffReader invalide ");
+		
+		
+	
 
 	}
 
