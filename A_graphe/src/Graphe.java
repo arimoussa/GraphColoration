@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class Graphe {
 	private int v; // number of vertices
 	private int e; // number of edges
 	//private ArrayList<Integer>[] adjacent;
-	private List<Sommet>[] adjacent ;
+	private ArrayList<Sommet>[] adjacent ;
 	
 	private ArrayList<Sommet> listeSommet;
 	private ArrayList<Arete> listeArete;
@@ -21,6 +22,44 @@ public class Graphe {
 	 public Graphe() {
 		 
 	 }
+	public int getV() {
+		return v;
+	}
+
+
+	public void setV(int v) {
+		this.v = v;
+	}
+
+
+	public int getE() {
+		return e;
+	}
+
+
+	public void setE(int e) {
+		this.e = e;
+	}
+
+
+	public ArrayList<Sommet> getListeSommet() {
+		return listeSommet;
+	}
+
+
+	public void setListeSommet(ArrayList<Sommet> listeSommet) {
+		this.listeSommet = listeSommet;
+	}
+
+
+	public ArrayList<Arete> getListeArete() {
+		return listeArete;
+	}
+
+
+	public void setListeArete(ArrayList<Arete> listeArete) {
+		this.listeArete = listeArete;
+	}
 	
 	/**
      * Initializes an empty graph with {@code V} vertices and 0 edges.
@@ -63,7 +102,7 @@ public class Graphe {
 						//System.out.println("Nb sommet lu : "  + this.v );
 						if( this.v < 0  ) throw new IllegalArgumentException("number of vertices in a Grap must be nonnegative") ;
 						
-						this.adjacent = new List[this.v];
+						this.adjacent = new ArrayList[this.v];
 						this.listeSommet = new ArrayList<Sommet>();
 						//Creation des sommets
 						
@@ -102,6 +141,7 @@ public class Graphe {
 						//Mise a jour de la liste d'adjacence
 						this.adjacent[numS1].add( new Sommet(numS2) );
 						
+						
 					}
 					//Lecture d'aretes
 					if( ( line.contains("aretes" ) ) )
@@ -119,7 +159,9 @@ public class Graphe {
 			e.printStackTrace();
 		}
 		
-		this.calculDegree();
+		if ( readingEdge ) this.calculDegree();
+		else System.out.println("Le format du fichier choisi est incorrect");
+		
 	}
 	
 	public void calculDegree() {
@@ -130,6 +172,76 @@ public class Graphe {
 			
 		}
 		
+	}
+	
+	/**
+	 * 
+	 * Retourne tous les sommets adjacent à S
+	 * @param s
+	 * @return
+	 */
+	public ArrayList<Sommet> adjacentSommetOf( Sommet s )
+	{
+		//validateVertex( s ) ;
+		return (ArrayList<Sommet>) this.adjacent[s.getNumero()] ;
+	}
+	
+	/**
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public boolean isAdjacentTo( Sommet a , Sommet b )
+	{
+	
+		if( a.getNumero() == b.getNumero() ) return true ;
+		ArrayList<Sommet> succ = this.adjacentSommetOf(a);
+		Iterator<Sommet> it  = succ.iterator() ;
+		while( it.hasNext() )
+		{
+			if( it.next().getNumero() == b.getNumero() ) return true ;
+		}
+		return false;
+	}
+	
+	/**
+	 * Trouve si a adjacent à un sommet de couleur k
+	 * @param a
+	 * @param list
+	 * @return
+	 */
+	
+	public boolean adjacentVerticesWithColor( Sommet a , ArrayList<Sommet> list , int[] color , int k )
+	{
+		Iterator<Sommet> it = list.iterator() ;
+		ArrayList<Integer> adj = new ArrayList<Integer>();
+		int i=0;
+		while( i <  list.size() )
+		{
+			if( this.isAdjacentTo(a, list.get(i)  ))
+			{	
+				if ( color[list.get(i).getNumero()]  == k ) {
+			
+					//System.out.print("Sommet  i: "+ a.getNumero() +"  Adjacent To: " +list.get(i).getNumero()  );
+					//System.out.println(" Color: " +color[list.get(i).getNumero()] + " et k:"+k );
+					
+					return false ;
+				}
+			}
+
+			i++;
+		}
+		
+		return true  ;
+	}
+	
+	public void validateVertex( Sommet s )
+	{
+		if( s.getNumero() < 0 || s.getNumero() >= this.v )
+		{
+			throw new IllegalArgumentException("Sommet " + s.getNumero()  + " n'est pas entre " + (this.v-1));
+		}
 	}
 	
 	public String toString()
