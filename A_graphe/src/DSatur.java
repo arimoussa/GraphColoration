@@ -84,8 +84,6 @@ public class DSatur extends Graphe implements Comparator<Sommet>{
 		
 		Collections.sort(sommetsNonColories, Collections.reverseOrder()); 
 		
-		for (int j=0; j<sommetsNonColories.size(); j++)
-			System.out.println("sommet :"+sommetsNonColories.get(j).getNumero());
 		
 		while(sommetsNonColories.size()>0) {
 			Sommet sNew =sommetsNonColories.get(0);
