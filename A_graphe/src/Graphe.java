@@ -13,7 +13,7 @@ public class Graphe {
 	
 	private int v; // number of vertices
 	private int e; // number of edges
-	//private ArrayList<Integer>[] adjacent;
+	
 	private ArrayList<Sommet>[] adjacent ;
 	
 	private ArrayList<Sommet> listeSommet;
@@ -181,9 +181,8 @@ public class Graphe {
 	 * @return
 	 */
 	public ArrayList<Sommet> adjacentSommetOf( Sommet s )
-	{
-		//validateVertex( s ) ;
-		return (ArrayList<Sommet>) this.adjacent[s.getNumero()] ;
+	{	
+		return (ArrayList<Sommet>)this.adjacent[s.getNumero()] ;
 	}
 	
 	/**
@@ -264,8 +263,7 @@ public class Graphe {
 		return s;
 	}
 	
-	
-	
+		
 	
 	
 }

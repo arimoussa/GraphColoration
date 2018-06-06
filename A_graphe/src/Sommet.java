@@ -11,7 +11,8 @@ public class Sommet implements Comparable<Sommet>{
 	private int degree;
 	private int numero;
 
-	
+	// coloration
+	private int couleur;
 	
 	public Sommet(int numero) {
 		// TODO Auto-generated constructor stub
@@ -36,6 +37,16 @@ public class Sommet implements Comparable<Sommet>{
 
 	public void setNumero(int numero) {
 		this.numero = numero;
+	}
+	
+	
+
+	public int getCouleur() {
+		return couleur;
+	}
+
+	public void setCouleur(int couleur) {
+		this.couleur = couleur;
 	}
 
 	@Override
