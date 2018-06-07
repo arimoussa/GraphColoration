@@ -108,7 +108,7 @@ public class Graphe {
 						
 						for(int i=0; i< this.v ; i++ )
 						{
-							this.listeSommet.add( new Sommet(i) ) ;
+							this.listeSommet.add( new Sommet(i, 0) ) ;
 						}
 						// Initialisation de la liste d'adjacence
 						for(int i=0 ; i < this.v ; i++ )
@@ -136,10 +136,10 @@ public class Graphe {
 						if( data.length != 2 ) throw new IllegalArgumentException("Une arete n'est pas bien ecrit ") ;
 						int numS1 = Integer.parseInt(data[0]);
 						int numS2 = Integer.parseInt(data[1]);
-						this.listeArete.add( new Arete(new Sommet(numS1), new Sommet (numS2) )) ;
+						this.listeArete.add( new Arete(new Sommet(numS1,0), new Sommet (numS2,0) )) ;
 						
 						//Mise a jour de la liste d'adjacence
-						this.adjacent[numS1].add( new Sommet(numS2) );
+						this.adjacent[numS1].add( new Sommet(numS2,0) );
 						
 						
 					}

@@ -5,6 +5,8 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 
+
+
 public class DSatur extends Graphe implements Comparator<Sommet>{
 	
 
@@ -40,7 +42,7 @@ public class DSatur extends Graphe implements Comparator<Sommet>{
     }
 	
 	
-	private boolean recherche(ArrayList<Sommet> listeSommet, int couleur){
+	/*private boolean recherche(ArrayList<Sommet> listeSommet, int couleur){
        int i =0;
        
         while(i<listeSommet.size()) {
@@ -50,12 +52,20 @@ public class DSatur extends Graphe implements Comparator<Sommet>{
         }
         return true;
     }
+	*/
 	
+	private boolean rC(ArrayList<Sommet> c, int x){
+        Iterator<Sommet> it=c.iterator();
+        while(it.hasNext())
+            if(it.next().getCouleur()==x)
+                return false;
+        return true;
+    }
 	
 	public int plusPetiteCouleur(ArrayList<Sommet> listeSommetVoisins) {
 		int couleur=1;
 		while(true) {
-			if(recherche(listeSommetVoisins, couleur)) {
+			if(rC(listeSommetVoisins, couleur)) {
 				return couleur;
 			}
 			couleur++;
@@ -78,12 +88,14 @@ public class DSatur extends Graphe implements Comparator<Sommet>{
 		// coloration du sommet avec le degree max avec la couleur 1
 		Sommet s = sommetsNonColories.get(0);
 		s.setCouleur(1);
-		
+		System.out.println("get 0 "+s.getNumero());
 		int nbChromatique = 1;
 		sommetsNonColories.remove(0);
 		
 		Collections.sort(sommetsNonColories, Collections.reverseOrder()); 
-		
+		for(int k=0; k<sommetsNonColories.size();k++) {
+			System.out.println("sommet " + sommetsNonColories.get(k).getNumero());
+		}
 		
 		while(sommetsNonColories.size()>0) {
 			Sommet sNew =sommetsNonColories.get(0);
@@ -107,8 +119,8 @@ public class DSatur extends Graphe implements Comparator<Sommet>{
             return degreSat(o2)-degreSat(o1);
         else {
 
-            int degreeO1 = adjacentSommetOf(o1).size();
-            int degreeO2 = adjacentSommetOf(o2).size();
+            int degreeO1 = g.adjacentSommetOf(o1).size();
+            int degreeO2 = g.adjacentSommetOf(o2).size();
         	return degreeO2-degreeO1;
         }
 	}
