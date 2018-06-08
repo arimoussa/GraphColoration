@@ -52,15 +52,14 @@ public class Test {
 			/*WelshPowell w = new WelshPowell( g , 0) ;
 			WelshPowell w1 = new WelshPowell( g , 1) ;
 			WelshPowell w2 = new WelshPowell( g , 2) ;*/
+			Greedy greed = new Greedy(g,2);
 			
-			DSatur dsat = new DSatur(g);
+			//DSatur dsat = new DSatur(g);
 			
 		}
 		else System.out.println("BuffReader invalide ");
 		
 		
-	
-
 	}
 
 }
