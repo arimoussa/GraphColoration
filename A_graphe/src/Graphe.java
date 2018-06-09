@@ -68,6 +68,12 @@ public class Graphe {
      * @param  V number of vertices
      * @throws IllegalArgumentException if {@code V < 0}
      */
+	
+	public void degreeSommet(Sommet s) {
+		int degree=this.adjacentSommetOf(s).size();
+        s.setDegree(degree);
+        //return degree;
+	}
 	public Graphe( int vertices )
 	{
 		if( vertices <0 ) throw new IllegalArgumentException("Number of vertices must be nonnegative ");
@@ -108,7 +114,10 @@ public class Graphe {
 						
 						for(int i=0; i< this.v ; i++ )
 						{
-							this.listeSommet.add( new Sommet(i, 0) ) ;
+							
+							/*Sommet s = new Sommet(i, 0);
+							degreeSommet(s);*/
+							this.listeSommet.add( new Sommet(i, 0 ) ) ;
 						}
 						// Initialisation de la liste d'adjacence
 						for(int i=0 ; i < this.v ; i++ )
@@ -136,10 +145,19 @@ public class Graphe {
 						if( data.length != 2 ) throw new IllegalArgumentException("Une arete n'est pas bien ecrit ") ;
 						int numS1 = Integer.parseInt(data[0]);
 						int numS2 = Integer.parseInt(data[1]);
-						this.listeArete.add( new Arete(new Sommet(numS1,0), new Sommet (numS2,0) )) ;
+						
+						//modifier
+						//this.listeArete.add( new Arete(new Sommet(numS1,0), new Sommet (numS2,0) )) ;
+						
+						
+						this.listeArete.add(new Arete(this.listeSommet.get(numS1), this.listeSommet.get(numS2)));
 						
 						//Mise a jour de la liste d'adjacence
-						this.adjacent[numS1].add( new Sommet(numS2,0) );
+						
+						//modifier
+					//	this.adjacent[numS1].add( new Sommet(numS2,0) );
+						
+						this.adjacent[numS1].add(this.listeSommet.get(numS2));
 						
 						
 					}
@@ -150,6 +168,8 @@ public class Graphe {
 						
 					}
 					
+					
+					
 				}
 				
 			
@@ -159,7 +179,12 @@ public class Graphe {
 			e.printStackTrace();
 		}
 		
-		if ( readingEdge ) this.calculDegree();
+		if ( readingEdge ) {
+			calculDegree();
+			
+			 
+		}
+		
 		else System.out.println("Le format du fichier choisi est incorrect");
 		
 	}
