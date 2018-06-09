@@ -56,7 +56,7 @@ public class Test {
 			DSatur dsat = new DSatur(g);
 			
 		}
-		else System.out.println("BuffReader invalide ");
+	//	else System.out.println("BuffReader invalide ");
 		
 		
 	

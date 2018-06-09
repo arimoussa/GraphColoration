@@ -42,30 +42,23 @@ public class DSatur extends Graphe implements Comparator<Sommet>{
     }
 	
 	
-	/*private boolean recherche(ArrayList<Sommet> listeSommet, int couleur){
+	private boolean recherche(ArrayList<Sommet> listeSommet, int couleur){
        int i =0;
        
         while(i<listeSommet.size()) {
-            if(listeSommet.get(i).getCouleur()==couleur)
-                return false;
+            if(listeSommet.get(i).getCouleur()==couleur) {
+            	return false;
+            }
             i++;
-        }
-        return true;
-    }
-	*/
-	
-	private boolean rC(ArrayList<Sommet> c, int x){
-        Iterator<Sommet> it=c.iterator();
-        while(it.hasNext())
-            if(it.next().getCouleur()==x)
-                return false;
+        }        
         return true;
     }
 	
+
 	public int plusPetiteCouleur(ArrayList<Sommet> listeSommetVoisins) {
 		int couleur=1;
 		while(true) {
-			if(rC(listeSommetVoisins, couleur)) {
+			if(recherche(listeSommetVoisins, couleur)) {
 				return couleur;
 			}
 			couleur++;
@@ -88,14 +81,14 @@ public class DSatur extends Graphe implements Comparator<Sommet>{
 		// coloration du sommet avec le degree max avec la couleur 1
 		Sommet s = sommetsNonColories.get(0);
 		s.setCouleur(1);
-		System.out.println("get 0 "+s.getNumero());
+	//	System.out.println("get 0 "+s.getNumero());
 		int nbChromatique = 1;
 		sommetsNonColories.remove(0);
 		
 		Collections.sort(sommetsNonColories, Collections.reverseOrder()); 
-		for(int k=0; k<sommetsNonColories.size();k++) {
+	/*	for(int k=0; k<sommetsNonColories.size();k++) {
 			System.out.println("sommet " + sommetsNonColories.get(k).getNumero());
-		}
+		}*/
 		
 		while(sommetsNonColories.size()>0) {
 			Sommet sNew =sommetsNonColories.get(0);
