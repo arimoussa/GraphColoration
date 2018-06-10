@@ -31,7 +31,7 @@ public class DSatur implements Comparator<Sommet> {
 
 		for (int i = 0; i < sommetRelation.size(); i++) {
 			Sommet sNext = sommetRelation.get(i);
-			if (s.getCouleur() != 0)
+			if (sNext.getCouleur() != 0)
 				nbCoulours.add(sNext.getCouleur());
 		}
 
@@ -83,17 +83,21 @@ public class DSatur implements Comparator<Sommet> {
 
 	public DSatur(Graphe g) {
 		// TODO Auto-generated constructor stub
-
 		super();
+		for(int v=0; v< g.adjacentSommetOf(g.getListeSommet().get(5)).size();v++)
+			System.out.println("voisins de 5 " + g.adjacentSommetOf(g.getListeSommet().get(5)).get(v) );
+			
+
+		
 		this.g = g;
 		
 		calculDSat(g.getListeSommet());
 		// trier par ordre decroissant de degrés
 
 		
-		Collections.sort(g.getListeSommet(), Collections.reverseOrder());
+		//Collections.sort(g.getListeSommet(), Collections.reverseOrder());
 
-		// g.getListeSommet().sort(Comparator.comparing(Sommet::getDegree).reversed());
+		g.getListeSommet().sort(Comparator.comparing(Sommet::getDegree).reversed());
 
 		// recuperation de tous les sommets du graphe
 		sommetsNonColories = new ArrayList<Sommet>();
@@ -103,12 +107,16 @@ public class DSatur implements Comparator<Sommet> {
 		Sommet s = sommetsNonColories.get(0);
 		s.setCouleur(1);
 		// System.out.println("get 0 "+s.getNumero());
-		int nbChromatique = 1;
+		int nbCouleurAttribuee = 1;
 		sommetsNonColories.remove(0);
 
 		calculDSat(sommetsNonColories);
 
-		Collections.sort(sommetsNonColories, Collections.reverseOrder());
+		//Collections.sort(sommetsNonColories, Collections.reverseOrder());
+		
+        Collections.sort(sommetsNonColories, this);
+
+		
 		/*
 		 * for(int k=0; k<sommetsNonColories.size();k++) { System.out.println("sommet "
 		 * + sommetsNonColories.get(k).getNumero()); }
@@ -121,20 +129,25 @@ public class DSatur implements Comparator<Sommet> {
 
 			int plusPetiteCouleur = plusPetiteCouleur(sommetRelation);
 
-			if (plusPetiteCouleur > nbChromatique)
-				nbChromatique = plusPetiteCouleur;
+			if (plusPetiteCouleur > nbCouleurAttribuee)
+				nbCouleurAttribuee = plusPetiteCouleur;
 			sNew.setCouleur(plusPetiteCouleur);
 			sommetsNonColories.remove(0);
 
 			calculDSat(sommetsNonColories);
-			Collections.sort(sommetsNonColories, Collections.reverseOrder());
+			
+			
+			//Collections.sort(sommetsNonColories, Collections.reverseOrder());
+			
+			sommetsNonColories.sort(Comparator.comparing(Sommet::getDSat).reversed());
+
 		}
 
 	//	System.out.println();
 		
 		for(int i=0; i<g.getListeSommet().size();i++)
-			System.out.println("sommet n "+g.getListeSommet().get(i).getNumero() + "degree " + g.getListeSommet().get(i).getDegree() + " couleur " + g.getListeSommet().get(i).getCouleur());
-		System.out.println("Nombre Chromatique du graphe: " + nbChromatique);
+			System.out.println("sommet n "+g.getListeSommet().get(i).getNumero() + "  degree " + g.getListeSommet().get(i).getDegree() + "   degree sat "+ g.getListeSommet().get(i).getDSat() + " couleur " + g.getListeSommet().get(i).getCouleur());
+		System.out.println("Nombre Chromatique du graphe: " + nbCouleurAttribuee);
 	}
 
 	@Override

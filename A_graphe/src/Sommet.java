@@ -16,10 +16,10 @@ public class Sommet implements Comparable<Sommet> {
 		this.numero = numero;
 	}
 
-	public Sommet(int numero, int couleur) {
+	/*public Sommet(int numero, int couleur) {
 		this.numero = numero;
 		this.couleur = couleur;
-	}
+	}*/
 
 	// getters et setters
 	public int getDegree() {

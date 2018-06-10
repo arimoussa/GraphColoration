@@ -117,7 +117,7 @@ public class Graphe {
 							
 							/*Sommet s = new Sommet(i, 0);
 							degreeSommet(s);*/
-							this.listeSommet.add( new Sommet(i, 0 ) ) ;
+							this.listeSommet.add( new Sommet(i) ) ;
 						}
 						// Initialisation de la liste d'adjacence
 						for(int i=0 ; i < this.v ; i++ )
