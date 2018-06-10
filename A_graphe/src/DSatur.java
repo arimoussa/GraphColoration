@@ -1,3 +1,5 @@
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -84,9 +86,11 @@ public class DSatur implements Comparator<Sommet> {
 	public DSatur(Graphe g) {
 		// TODO Auto-generated constructor stub
 		super();
+		Instant start = Instant.now();
+		/*
 		for(int v=0; v< g.adjacentSommetOf(g.getListeSommet().get(5)).size();v++)
 			System.out.println("voisins de 5 " + g.adjacentSommetOf(g.getListeSommet().get(5)).get(v) );
-			
+		*/	
 
 		
 		this.g = g;
@@ -144,10 +148,17 @@ public class DSatur implements Comparator<Sommet> {
 		}
 
 	//	System.out.println();
-		
+		/*
 		for(int i=0; i<g.getListeSommet().size();i++)
 			System.out.println("sommet n "+g.getListeSommet().get(i).getNumero() + "  degree " + g.getListeSommet().get(i).getDegree() + "   degree sat "+ g.getListeSommet().get(i).getDSat() + " couleur " + g.getListeSommet().get(i).getCouleur());
-		System.out.println("Nombre Chromatique du graphe: " + nbCouleurAttribuee);
+			*/
+		Instant end  = Instant.now();
+		long time = Duration.between(start, end).toMillis() ;
+		//long nano = Duration.between(start, end).toNanos();
+	
+		System.out.println("\n Dsatur :" + nbCouleurAttribuee +"  Temps d'execution: "+ time+" mili sec ");//+nano+" nano sec");
+		
+		
 	}
 
 	@Override

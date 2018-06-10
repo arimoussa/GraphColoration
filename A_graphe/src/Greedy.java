@@ -1,3 +1,5 @@
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,6 +19,7 @@ public class Greedy {
 		
 		if( g.getV() == 0 ) System.exit(0);
 
+		Instant start = Instant.now();
 		if( ordreTri > 2 && ordreTri <0 ) 
 			{
 				System.out.println("L'entier ordreTri doit etre compris entre 0 et 2:");
@@ -64,8 +67,11 @@ public class Greedy {
 			if( assignedColor[i] > max   ) max= assignedColor[i] ;
 		}
 
-		
-		System.out.println("\nGreedy Algorithme: Nombre Chromatique de g : " + max +" avec un tri des sommets par ordre "+ordre+" des degres \n");
+		Instant end = Instant.now();
+		long time = Duration.between(start, end).toMillis() ;
+		long nano = Duration.between(start, end).toNanos();
+	
+		System.out.println("\n Greedy "+ordre +":" + max +" Temps d'execution: "+ time+" mili sec "+nano+" nano sec");
 		
 	}
 	

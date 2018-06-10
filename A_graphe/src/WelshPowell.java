@@ -1,4 +1,6 @@
 import java.awt.List;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -18,6 +20,7 @@ public class WelshPowell {
 	{
 		if( g.getV() == 0 ) System.exit(0);
 		
+		Instant start = Instant.now();
 		sortedVertices = new ArrayList<Sommet>(g.getListeSommet() );
 		String ordre="";
 		if( ordreTri > 2 && ordreTri <0 ) 
@@ -86,7 +89,7 @@ public class WelshPowell {
 						// Y non adjacent à un sommet de couleur k
 						if ( finAdj   ) 
 						{
-							color[ y.getNumero() ]  = j ;
+							color[ y.getNumero() ]  = j;
 							copy.remove(y);
 						}
 						j++;
@@ -107,7 +110,10 @@ public class WelshPowell {
 		 
 		}*/
 		
-		System.out.println("\n WelshPowell : Nombre Chromatique de g : " + k +" avec un tri des sommets par ordre "+ordre+" des degres \n");
+		Instant end = Instant.now();
+		long time = Duration.between(start, end).toMillis() ;
+		long nano = Duration.between(start, end).toNanos();
+		System.out.println("\n WelshPowell "+ordre +":" + k +" Temps d'execution: "+ time+" mili sec "+nano+" nano sec");
 	}
 	
 

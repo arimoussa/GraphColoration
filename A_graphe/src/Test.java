@@ -60,8 +60,8 @@ public class Test {
 			DSatur dsat = new DSatur(g);
 			
 			
-			System.out.println("Plusieurs algorithme dispo : ");
-			System.out.println("1: ");
+			//System.out.println("Plusieurs algorithme dispo : ");
+			//System.out.println("1: ");
 			
 		}
 	//	else System.out.println("BuffReader invalide ");
