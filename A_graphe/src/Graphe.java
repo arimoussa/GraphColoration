@@ -95,6 +95,7 @@ public class Graphe {
 		
 		String line = null ;
 		boolean readingEdge=false;
+		boolean boolColor = false;
 		try {
 				while ( ( line = buff.readLine() ) != null )
 				{
@@ -117,6 +118,7 @@ public class Graphe {
 							
 							/*Sommet s = new Sommet(i, 0);
 							degreeSommet(s);*/
+							
 							this.listeSommet.add( new Sommet(i) ) ;
 						}
 						// Initialisation de la liste d'adjacence
@@ -161,12 +163,34 @@ public class Graphe {
 						
 						
 					}
-					//Lecture d'aretes
+					//amal
+					
 					if( ( line.contains("aretes" ) ) )
 					{
 						readingEdge = true;
+						boolColor = false;
+					}
+					if (boolColor) {
+						String[] data = line.split(" ");
+						System.out.println("data split :" + Arrays.toString( data ));
+						System.out.println("Length : "  + data.length);
+						if( data.length != 2 ) throw new IllegalArgumentException("une couleur n'est pas écrite ") ;
+						int numS = Integer.parseInt(data[0]);
+						int color = Integer.parseInt(data[1]);
+						
+						this.listeSommet.get(numS).setCouleur(color);
+					}
+					if(line.contains("Couleur")) {
+						
+						boolColor = true;
+						//buff.skip(8);
+						//buff.readLine();
 						
 					}
+					//amal
+					
+					//Lecture d'aretes
+					
 					
 					
 					
@@ -274,16 +298,16 @@ public class Graphe {
 		
 		for(int i=0 ; i<this.v; i++ )
 		{
-			s+= this.listeSommet.get(i).getNumero() + " deg= "+  this.listeSommet.get(i).getDegree()   +" \n";
+			s+= this.listeSommet.get(i).getNumero() + " deg= "+  this.listeSommet.get(i).getDegree()  +" couleur ="+ this.listeSommet.get(i).getCouleur()+ "\n";
 			
 		}
 		
-		s+="Liste des aretes: \n";
+	/*	s+="Liste des aretes: \n";
 		for(int i=0 ; i<this.e ; i++ )
 		{
 			s+= this.listeArete.get(i).getSommet1().getNumero() +"---"+ this.listeArete.get(i).getSommet2().getNumero()  +" \n";
 			
-		}
+		}*/
 		
 		return s;
 	}
