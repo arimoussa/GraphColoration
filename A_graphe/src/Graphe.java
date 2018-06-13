@@ -11,17 +11,20 @@ import java.util.List;
 public class Graphe {
 
 	
-	private int v; // number of vertices
-	private int e; // number of edges
+	private int v; // nombre de sommets
+	private int e; // nombre d'aretes
 	
-	private ArrayList<Sommet>[] adjacent ;
+	private ArrayList<Sommet>[] adjacent ;// liste d'adjacence
 	
-	private ArrayList<Sommet> listeSommet;
-	private ArrayList<Arete> listeArete;
+	private ArrayList<Sommet> listeSommet;// liste des sommets
+	private ArrayList<Arete> listeArete;// liste des aretes
+	
 	
 	 public Graphe() {
 		 
 	 }
+	
+	// Getter et Setter 
 	public int getV() {
 		return v;
 	}
@@ -41,7 +44,7 @@ public class Graphe {
 		this.e = e;
 	}
 
-
+	
 	public ArrayList<Sommet> getListeSommet() {
 		return listeSommet;
 	}
@@ -61,52 +64,36 @@ public class Graphe {
 		this.listeArete = listeArete;
 	}
 	
+
 	/**
-     * Initializes an empty graph with {@code V} vertices and 0 edges.
-     * param V the number of vertices
-     *
-     * @param  V number of vertices
-     * @throws IllegalArgumentException if {@code V < 0}
-     */
-	
+	 * Calcule le degre d'un sommet et assigne cette valeur au degre du sommet
+	 * @param s le sommet
+	 */
 	public void degreeSommet(Sommet s) {
 		int degree=this.adjacentSommetOf(s).size();
         s.setDegree(degree);
         //return degree;
 	}
-	public Graphe( int vertices )
-	{
-		if( vertices <0 ) throw new IllegalArgumentException("Number of vertices must be nonnegative ");
-		//this.adjacent = ( Bag<Integer>[] )new Bag[this.v];
-		
-		
-		this.v = vertices ;
-		this.e = 0;
-		this.adjacent = new ArrayList[this.v];
-		for(int i=0; i< vertices; i++ )
-		{
-			//this.adjacent[i] = new LinkedList<Integer>() ;
-		}
-	}
 	
-	
+	/**
+	 * Lit un fichier de configuration de graphe et cree un graphe avec cette configuration
+	 * @param buff bufferedReader
+	 */
 	public Graphe( BufferedReader buff) 
 	{
 		
-		String line = null ;
-		boolean readingEdge=false;
-		boolean boolColor = false;
+		String line = null ; // Ligne courante
+		boolean readingEdge=false; // Pour savoir si on lit une arete
+		boolean boolColor = false;// Pour savoir si on lit une couleur
 		try {
 				while ( ( line = buff.readLine() ) != null )
 				{
 					
-					if( line.contains("NbSommets")   )
+					if( line.contains("NbSommets")   ) // si la ligne contient le mot NbSommets
 					{
 						int indiceDebut = line.indexOf(":");
-						//System.out.println(" Line : " + line.substring(indiceDebut+2).trim()  );
 						this.v = Integer.parseInt( line.substring(indiceDebut+2).trim() );
 						
-						//System.out.println("Nb sommet lu : "  + this.v );
 						if( this.v < 0  ) throw new IllegalArgumentException("number of vertices in a Grap must be nonnegative") ;
 						
 						this.adjacent = new ArrayList[this.v];
@@ -115,10 +102,6 @@ public class Graphe {
 						
 						for(int i=0; i< this.v ; i++ )
 						{
-							
-							/*Sommet s = new Sommet(i, 0);
-							degreeSommet(s);*/
-							
 							this.listeSommet.add( new Sommet(i) ) ;
 						}
 						// Initialisation de la liste d'adjacence
@@ -132,9 +115,7 @@ public class Graphe {
 					if( ( line.contains("NbArcs" ) ) )
 					{
 						int indiceDebut = line.indexOf(":");
-						//System.out.println(" ligne NB arcs: " + this.e);
 						this.e = Integer.parseInt( line.substring(indiceDebut+2) );
-						//System.out.println("NB arcs lu : " + this.e);
 						if( this.e < 0  ) throw new IllegalArgumentException("number of edges in a Grap must be nonnegative") ;
 						this.listeArete = new ArrayList<Arete>();
 					}
@@ -142,29 +123,16 @@ public class Graphe {
 					if( readingEdge )
 					{
 						String[] data = line.split(" ");
-						//System.out.println("data split :" + Arrays.toString( data ));
-						//System.out.println("Length : "  + data.length);
 						if( data.length != 2 ) throw new IllegalArgumentException("Une arete n'est pas bien ecrit ") ;
 						int numS1 = Integer.parseInt(data[0]);
 						int numS2 = Integer.parseInt(data[1]);
-						
-						//modifier
-						//this.listeArete.add( new Arete(new Sommet(numS1,0), new Sommet (numS2,0) )) ;
-						
-						
 						this.listeArete.add(new Arete(this.listeSommet.get(numS1), this.listeSommet.get(numS2)));
 						
 						//Mise a jour de la liste d'adjacence
-						
-						//modifier
-					//	this.adjacent[numS1].add( new Sommet(numS2,0) );
-						
 						this.adjacent[numS1].add(this.listeSommet.get(numS2));
 						
 						
 					}
-					//amal
-					
 					if( ( line.contains("aretes" ) ) )
 					{
 						readingEdge = true;
@@ -183,17 +151,8 @@ public class Graphe {
 					if(line.contains("Couleur")) {
 						
 						boolColor = true;
-						//buff.skip(8);
-						//buff.readLine();
 						
 					}
-					//amal
-					
-					//Lecture d'aretes
-					
-					
-					
-					
 				}
 				
 			
@@ -213,6 +172,9 @@ public class Graphe {
 		
 	}
 	
+	/**
+	 * Calcule le degre d'un sommet
+	 */
 	public void calculDegree() {
 		
 		for(int i=0; i<this.adjacent.length ; i++) {
@@ -235,10 +197,10 @@ public class Graphe {
 	}
 	
 	/**
-	 * 
-	 * @param a
-	 * @param b
-	 * @return
+	 * Teste si deux sommets sont adjacents
+	 * @param a le 1er sommet
+	 * @param b le 2eme sommet
+	 * @return True/False
 	 */
 	public boolean isAdjacentTo( Sommet a , Sommet b )
 	{
@@ -254,12 +216,19 @@ public class Graphe {
 	}
 	
 	/**
-	 * Trouve si a adjacent à un sommet de couleur k
-	 * @param a
-	 * @param list
+	 * Verifie si le sommet a est adjacent à un sommet de couleur k
+	 * @param a le sommet 
+	 * @param list la liste des sommets
 	 * @return
 	 */
-	
+	/**
+	 * Verifie si le sommet a est adjacent à un sommet de couleur k
+	 * @param a		le sommet 
+	 * @param list la liste des sommets
+	 * @param color le tableau de couleur des sommets
+	 * @param k la couleur k a chercher
+	 * @return 	t	True si y n'es pas adjacent à un sommet de couleur k
+	 */
 	public boolean adjacentVerticesWithColor( Sommet a , ArrayList<Sommet> list , int[] color , int k )
 	{
 		Iterator<Sommet> it = list.iterator() ;
@@ -284,6 +253,10 @@ public class Graphe {
 		return true  ;
 	}
 	
+	/**
+	 * Teste si le sommet s à un numero valide
+	 * @param s le sommet s
+	 */
 	public void validateVertex( Sommet s )
 	{
 		if( s.getNumero() < 0 || s.getNumero() >= this.v )
@@ -298,21 +271,34 @@ public class Graphe {
 		
 		for(int i=0 ; i<this.v; i++ )
 		{
-			s+= this.listeSommet.get(i).getNumero() + " deg= "+  this.listeSommet.get(i).getDegree()  +" couleur ="+ this.listeSommet.get(i).getCouleur()+ "\n";
+			s+= this.listeSommet.get(i).getNumero() + " deg= "+  this.listeSommet.get(i).getDegree()+"\n";
 			
 		}
-		
-	/*	s+="Liste des aretes: \n";
-		for(int i=0 ; i<this.e ; i++ )
-		{
-			s+= this.listeArete.get(i).getSommet1().getNumero() +"---"+ this.listeArete.get(i).getSommet2().getNumero()  +" \n";
-			
-		}*/
 		
 		return s;
 	}
 	
 		
-	
+
+	/*public String toString()
+	{
+		String s = "NbSommets :"+this.v+"\n"+ "NbArcs: "+this.e+"\n"+"Liste des sommets:\n";
+		
+		for(int i=0 ; i<this.v; i++ )
+		{
+			s+= this.listeSommet.get(i).getNumero() + " deg= "+  this.listeSommet.get(i).getDegree()  +" couleur ="+ this.listeSommet.get(i).getCouleur()+ "\n";
+			
+		}
+		
+	s+="Liste des aretes: \n";
+		for(int i=0 ; i<this.e ; i++ )
+		{
+			s+= this.listeArete.get(i).getSommet1().getNumero() +"---"+ this.listeArete.get(i).getSommet2().getNumero()  +" \n";
+			
+		}
+		
+		return s;
+	}*/
+
 	
 }

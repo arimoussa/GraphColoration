@@ -23,16 +23,4 @@ public class Arete {
 	public void setSommet2(Sommet sommet2) {
 		this.sommet2 = sommet2;
 	}
-	
-	/*
-	public boolean adjacent( Sommet a , Sommet b )
-	{
-		if( this.getSommet1().getNumero() == a.getNumero() && this.getSommet2().getNumero() == b.getNumero() ) return true ;
-		if( this.getSommet1().getNumero()  == b.getNumero() & this.getSommet2().getNumero()  == a.getNumero() ) return true ;
-		
-		return false;
-	}
-	
-	*/
-
 }

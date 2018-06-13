@@ -11,9 +11,11 @@ import java.util.Map;
 
 public class Greedy {
 
-	private ArrayList<Sommet> sortedVertices;
-	private int chromaticNumber;
+	private ArrayList<Sommet> sortedVertices; // liste triée des sommets du graphe
+
 	
+	
+	// Algorithme greedy
 	public Greedy( Graphe g , int ordreTri )
 	{
 		
@@ -32,7 +34,7 @@ public class Greedy {
 		
 		sortedVertices = new ArrayList<Sommet>(g.getListeSommet() );
 		String ordre="";
-		// Tri de la liste de sommets
+		// Tri de la liste de sommets en fonction de l'ordre
 		if( ordreTri== 0 ) {
 			Collections.sort(sortedVertices , Collections.reverseOrder() ); ordre = " decroissant" ;
 		}
@@ -44,79 +46,75 @@ public class Greedy {
 		}
 		
 		
-		int[] assignedColor = new int[g.getV() ];
+		int[] assignedColor = new int[g.getV() ];// tableau des couleurs assignées au sommet
 		for( int i=0 ; i <  sortedVertices.size() ;i++)
 		{
-			
 			assignedColor[ i ]  = 0 ;
 		}
 		
-		
+		//Parcours de tous les sommets de la liste triée et on assigne la plus petite couleur possible
 		for( int i=0 ; i <  sortedVertices.size() ;i++)
 		{
-			
 			assignedColor[ sortedVertices.get(i).getNumero()  ]  = assignColorToVertex (  sortedVertices.get(i)  , g , assignedColor ) ;
-			
-			//if( i== 84 ) System.out.println("Boucle assign assignedColor: "+ assignedColor[i] );
 		}
 		
+		// Recherche de la couleur maximale
 		int max= assignedColor[0] ;
 		for(int i=1; i < assignedColor.length ;i++ )
 		{
-			//System.out.println("assicolor "+ "i:" + assignedColor[i] );
 			if( assignedColor[i] > max   ) max= assignedColor[i] ;
 		}
-
+		
+		/*
+		for( int i=0 ; i <  g.getListeSommet().size() ;i++)
+		{
+			System.out.println("Sommet "+g.getListeSommet().get(i).getNumero() +" color:"+ assignedColor[ g.getListeSommet().get(i).getNumero() ] );
+		 
+		}
+		*/
+		
+		//Calcul du temps d'execution
 		Instant end = Instant.now();
 		long time = Duration.between(start, end).toMillis() ;
 		long nano = Duration.between(start, end).toNanos();
 	
-		System.out.println("\n Greedy "+ordre +":" + max +" Temps d'execution: "+ time+" mili sec "+nano+" nano sec");
+		// Affichage du resultat
+		System.out.println("\n Greedy "+ordre +" : " + max +"\nTemps d'execution: "+ time+" mili sec "+nano+" nano sec");
 		
 	}
 	
 	/**
-	 * 
-	 * @param s
-	 * @param g
-	 * @param assignedColor
+	 * Retourne la plus petite couleur possible pour un sommet 
+	 * @param s le sommet à colorier
+	 * @param g l graphe
+	 * @param assignedColor le tableau de couleur des autres sommets
 	 * @return
 	 */
 	public int assignColorToVertex( Sommet s , Graphe g , int[]  assignedColor )
 	{
-		ArrayList<Integer> colorRemove = new ArrayList<Integer>();
 		ArrayList<Integer> colorSet = new ArrayList<Integer>();
 		
 		initializeColor(colorSet ,g.getV() ) ;
-		
-		//System.out.print ("a remove : ");
+
 		for (Sommet adj : g.adjacentSommetOf(s) )
 		{
 			if( assignedColor[ adj.getNumero() ] != 0  )
-			{
-				//colorRemove.add( assignedColor[ adj.getNumero() ] ) ;
-				
+			{	
 				Integer a = new Integer( assignedColor[ adj.getNumero() ] ) ;
 				boolean b = colorSet.remove( a )  ;
 			}	
 		}
-		
-		//colorSet.sort(null);
+
 		if ( colorSet.size() == 0 ) 
 		{
 			System.out.println("Dans assignColorToVertex color vide apres remove");
 			System.exit(0);
 		}
-		
-		//System.out.println("Color set trie :" +colorSet.toString());
-		/*if( s.getNumero() == 84 )
-		{
-			System.out.println("* Methode Assign Couleur sommet "+ s.getNumero()+" : " + colorSet.get(0) );
-		}*/
-		//System.out.println("Couleur sommet "+ s.getNumero()+" : " + colorSet.get(0) );
 		return colorSet.get(0);	
 	}
 	
+	
+	// Initialisation de la liste de couleur disponible
 	public void initializeColor( ArrayList<Integer> colorSet  , int size )
 	{
 		

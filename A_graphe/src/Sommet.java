@@ -16,11 +16,6 @@ public class Sommet implements Comparable<Sommet> {
 		this.numero = numero;
 	}
 
-	/*public Sommet(int numero, int couleur) {
-		this.numero = numero;
-		this.couleur = couleur;
-	}*/
-
 	// getters et setters
 	public int getDegree() {
 		return degree;
@@ -65,29 +60,5 @@ public class Sommet implements Comparable<Sommet> {
 
 		return this.getNumero() + " ";
 	}
-	/*
-	 * public boolean adjacentTo( Sommet s ,ArrayList<Sommet>, ArrayList<Arete> a )
-	 * {
-	 * 
-	 * Iterator<Arete> it = a.iterator(); Iterator<Arete> itSommet = a.iterator();
-	 * 
-	 * while( itSommet.hasNext() ) {
-	 * 
-	 * 
-	 * }
-	 * 
-	 * while( it.hasNext() ) {
-	 * 
-	 * if( it.next().adjacent(s, s) ) {
-	 * 
-	 * }
-	 * 
-	 * 
-	 * }
-	 * 
-	 * 
-	 * 
-	 * return false; }
-	 */
 
 }
