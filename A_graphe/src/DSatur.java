@@ -13,10 +13,8 @@ public class DSatur implements Comparator<Sommet> {
 	private Graphe g;
 
 	/**
-	 * calcul du degre de saturation de chaque sommet
-	 * 
-	 * @param s
-	 *            : le sommet
+	 * calcul du degre de saturation d'un sommet
+	 * @param s: le sommet
 	 * @return si aucun voisin de s est colorié, alors degreSat(x) renvoie le degre
 	 *         de s sinon, degreSat(s), le nombre de couleurs differentes utilisées
 	 *         dans le voisinage de s
@@ -52,6 +50,14 @@ public class DSatur implements Comparator<Sommet> {
 
 	}
 
+	/***
+	 * recherche si un sommet voisin a la même couleur que le sommet en question
+	 * utile dans la recherche de plus petite couleur à attribuer 
+	 * @param listeSommet
+	 * @param couleur
+	 * @return vrai si la couleur n'est pas attibuée à un voisin
+	 * 			faux si la couleur est déjà prise par un voisin
+	 */
 	private boolean recherche(ArrayList<Sommet> listeSommet, int couleur) {
 		int i = 0;
 
@@ -64,6 +70,11 @@ public class DSatur implements Comparator<Sommet> {
 		return true;
 	}
 
+	/**
+	 * Recherche de la plus petite couleur à attribuer en fonction des voisins
+	 * @param listeSommetVoisins
+	 * @return la plus petite couleur 
+	 */
 	public int plusPetiteCouleur(ArrayList<Sommet> listeSommetVoisins) {
 		int couleur = 1;
 		while (true) {
@@ -74,33 +85,32 @@ public class DSatur implements Comparator<Sommet> {
 		}
 	}
 
+	/**
+	 * Calcul des degrés saturés de tous les sommets
+	 * Maj nécessaire dans l'algo
+	 * @param sommetsNonColorier
+	 */
 	public void calculDSat(ArrayList<Sommet> sommetsNonColorier) {
 		for (int i = 0; i <= sommetsNonColorier.size() - 1; i++) {
 			sommetsNonColorier.get(i).setDSat(degreSat(sommetsNonColorier.get(i)));
-			//sommetsNonColorier.get(i).setDegree(degreSat(sommetsNonColorier.get(i)));
-			
 		}
 	}
 
+	/**
+	 * Algorithme DSatur
+	 * @param g : le graphe à colorier
+	 */
 
 	public DSatur(Graphe g) {
 		// TODO Auto-generated constructor stub
 		super();
-		Instant start = Instant.now();
-		/*
-		for(int v=0; v< g.adjacentSommetOf(g.getListeSommet().get(5)).size();v++)
-			System.out.println("voisins de 5 " + g.adjacentSommetOf(g.getListeSommet().get(5)).get(v) );
-		*/	
-
-		
+		// début timer pour calcul du temps d'exécution
+		Instant start = Instant.now();	
 		this.g = g;
 		
+		// initialisation de tous les degrés saturés des sommets
 		calculDSat(g.getListeSommet());
-		// trier par ordre decroissant de degrés
-
-		
-		//Collections.sort(g.getListeSommet(), Collections.reverseOrder());
-
+		// 1er temps : trier par ordre decroissant de degrés
 		g.getListeSommet().sort(Comparator.comparing(Sommet::getDegree).reversed());
 
 		// recuperation de tous les sommets du graphe
@@ -110,22 +120,19 @@ public class DSatur implements Comparator<Sommet> {
 		// coloration du sommet avec le degree max avec la couleur 1
 		Sommet s = sommetsNonColories.get(0);
 		s.setCouleur(1);
-		// System.out.println("get 0 "+s.getNumero());
+		// compteur de couleur attribué
 		int nbCouleurAttribuee = 1;
+		
+		// une fois le sommet colorié, on le retire du graphe
 		sommetsNonColories.remove(0);
-
+		
+		// maj des degrés saturés 
 		calculDSat(sommetsNonColories);
 
-		//Collections.sort(sommetsNonColories, Collections.reverseOrder());
-		
+		//tri décroissant
         Collections.sort(sommetsNonColories, this);
-
-		
-		/*
-		 * for(int k=0; k<sommetsNonColories.size();k++) { System.out.println("sommet "
-		 * + sommetsNonColories.get(k).getNumero()); }
-		 */
-
+        
+        // tant qu'on a des sommets à colorier, on boucle
 		while (sommetsNonColories.size() > 0) {
 			Sommet sNew = sommetsNonColories.get(0);
 
@@ -140,22 +147,12 @@ public class DSatur implements Comparator<Sommet> {
 
 			calculDSat(sommetsNonColories);
 			
-			
-			//Collections.sort(sommetsNonColories, Collections.reverseOrder());
-			
 			sommetsNonColories.sort(Comparator.comparing(Sommet::getDSat).reversed());
 
 		}
 
-	//	System.out.println();
-		/*
-		for(int i=0; i<g.getListeSommet().size();i++)
-			System.out.println("sommet n "+g.getListeSommet().get(i).getNumero() + "  degree " + g.getListeSommet().get(i).getDegree() + "   degree sat "+ g.getListeSommet().get(i).getDSat() + " couleur " + g.getListeSommet().get(i).getCouleur());
-			*/
 		Instant end  = Instant.now();
-		long time = Duration.between(start, end).toMillis() ;
-		//long nano = Duration.between(start, end).toNanos();
-	
+		long time = Duration.between(start, end).toMillis() ;	
 		System.out.println("\n Dsatur :" + nbCouleurAttribuee +"  Temps d'execution: "+ time+" mili sec ");//+nano+" nano sec");
 		
 		
@@ -163,23 +160,14 @@ public class DSatur implements Comparator<Sommet> {
 
 	@Override
 	public int compare(Sommet o1, Sommet o2) {
-		// TODO Auto-generated method stub
-		/*
-		 * if(degreSat(o2)-degreSat(o1)!=0) return degreSat(o2)-degreSat(o1); else {
-		 * 
-		 * int degreeO1 = g.adjacentSommetOf(o1).size(); int degreeO2 =
-		 * g.adjacentSommetOf(o2).size(); return degreeO2-degreeO1; }
-		 */
-
+		
 		if (o2.getDSat() < o1.getDSat())
-
 			return -1;
 		else if (o1.getDSat() < o2.getDSat())
 			return 1;
 		else {
+			return -1 * Integer.compare(o1.getDegree(), o2.getDegree());
 		}
-		return -1 * Integer.compare(o1.getDegree(), o2.getDegree());
-
 	}
 
 }

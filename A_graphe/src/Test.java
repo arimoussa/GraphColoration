@@ -48,25 +48,22 @@ public class Test {
 		if( buffReader != null  ) 
 		{
 			Graphe g = new Graphe( buffReader ) ;
-			//System.out.println( "\n\nAffichage du graphe \n" + g.toString() );
-		/*	WelshPowell w = new WelshPowell( g , 0) ;
+			System.out.println( "\n\nAffichage du graphe \n" + g.toString() );
+			WelshPowell w = new WelshPowell( g , 0) ;
 			WelshPowell w1 = new WelshPowell( g , 1) ;
 			WelshPowell w2 = new WelshPowell( g , 2) ;
 			Greedy greed3 = new Greedy(g,0);
 			Greedy greed2 = new Greedy(g,1);
-			Greedy greed = new Greedy(g,2);*/
+			Greedy greed = new Greedy(g,2);
 			
 			
 			DSatur dsat = new DSatur(g);
 			System.out.println( "\n\nAffichage du graphe \n" + g.toString() );
 
-			
-			//System.out.println("Plusieurs algorithme dispo : ");
-			//System.out.println("1: ");
+		
 			
 		}
-	//	else System.out.println("BuffReader invalide ");
-		
+
 		
 	}
 
